@@ -16,20 +16,20 @@ function App() {
 		{id: 3, title: 'Title 2', body: 'Description'},
 	]);
 
-	const [title, setTitle] = useState('');
-	const bodyInputRef = useRef();
+	const [post, setPost] = useState({title: '', body: ''});
+	// const [body, setBody] = useState('');
 
 	const addNewPost = (e) => {
 		e.preventDefault();
-		console.log(bodyInputRef.current.value)
+
+		setPosts([...posts, {...post, id: Date.now()}])
+		setPost({title: '', body: ''})
 	}
   return (
     <div className="App">
 			<form>
-				{/* управляемый компонент */}
-				<MyInput value={title} onChange={event => setTitle(event.target.value)} type="text" placeholder="Название поста" />
-				{/* неуправляемый/неконтролируемый компонент */}
-				<MyInput ref={bodyInputRef} type="text" placeholder="Описание поста" />
+				<MyInput value={post.title} onChange={event => setPost({...post, title: event.target.value})} type="text" placeholder="Название поста" />
+				<MyInput value={post.body} onChange={event => setPost({...post, body: event.target.value})} type="text" placeholder="Описание поста" />
 				<MyButton onClick={addNewPost}>Создать пост</MyButton>
 			</form>
 
