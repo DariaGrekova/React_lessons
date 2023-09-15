@@ -8,7 +8,7 @@
 	display: flex;
 	justify-content: center;
 	background-color: rgba(73, 219, 171, 0.082);
-	height: 100svh;
+	min-height: 100svh;
 }
 
 .App {
