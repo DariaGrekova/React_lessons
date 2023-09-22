@@ -6,6 +6,7 @@ import './styles/App.css'
 import PostList from "./components/PostList";
 import PostForm from "./components/PostForm";
 import MySelect from "./components/UI/select/MySelect";
+import MyInput from "./components/UI/input/MyInput";
 
 
 function App() {
@@ -17,7 +18,16 @@ function App() {
 	]);
 
 	const [selectedSort, setSelectedSort] = useState('');
+	const [searchQuery, setSearchQuery] = useState('');
 
+	function getSortedPosts() {
+		console.log(4545)
+		if (selectedSort) {
+			return [...posts].sort((a, b) => a[selectedSort].localeCompare(b[selectedSort]));
+		}
+		return posts;
+	}
+	const sortedPosts = getSortedPosts();
 
 	// Получаем post из дочернего компонента 
 	const createPost = (newPost) => {
@@ -30,7 +40,6 @@ function App() {
 
 	const sortPosts = (sort) => {
 		setSelectedSort(sort);
-		setPosts([...posts].sort((a, b) => a[sort].localeCompare(b[sort])))
 	}
 
 	return (
@@ -47,8 +56,13 @@ function App() {
 						{ value: "body", name: "По описанию" }
 					]} />
 			</div>
+			<MyInput
+				placeholder="Поиск..."
+				value={searchQuery}
+				onChange={e => setSearchQuery(e.target.value)}
+			/>
 			{posts.length !== 0
-				? <PostList remove={removePost} posts={posts} title="Посты про JS" />
+				? <PostList remove={removePost} posts={sortedPosts} title="Посты про JS" />
 				: <h1 className="title">Посты не найдены!</h1>
 			}
 
